@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour
     public AudioClip winMusic;
     public AudioSource audioPlayer;
     private bool moveFlag = false;
+    private Animator animator;
+    private SpriteRenderer sprite;
+    private bool isRight = false;
+    private bool isAir = false;
+    private bool musicPlay = false;
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -30,6 +36,12 @@ public class PlayerController : MonoBehaviour
 
         audioPlayer.clip = background;
         audioPlayer.Play();
+
+        animator = GetComponent<Animator>();
+
+        animator.SetInteger("State", 0);
+
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     
@@ -39,7 +51,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey("escape"))
              Application.Quit();
 
-        if(lives == 0)
+        if(lives == 0 && !musicPlay)
         {
            this.gameObject.SetActive(false); 
         }
@@ -53,8 +65,11 @@ public class PlayerController : MonoBehaviour
             mainCamera.gameObject.transform.position = cameraSpot.position;
 
             moveFlag = true;
+
+            SetText();
         }
 
+        JumpAndFallAnim();
 
         
     }
@@ -62,22 +77,81 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate() 
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
+
+
+        if(moveHorizontal != 0)
+        {
+            animator.SetInteger("State", 1);
+
+            if(moveHorizontal > 0 && isRight)
+            {
+                Vector3 theScale = transform.localScale;
+                theScale.x *= -1;
+                transform.localScale = theScale;
+
+                isRight = !isRight;   
+            }
+
+            if(moveHorizontal < 0 && !isRight)
+            {
+                Vector3 theScale = transform.localScale;
+                theScale.x *= -1;
+                transform.localScale = theScale;
+
+                isRight = !isRight; 
+            }
+        }
+        
+
+        else
+        {
+            animator.SetInteger("State", 0);
+        }
         
         Vector2 movement = new Vector2(moveHorizontal, 0);
 
         rb2d.AddForce(movement * speed);
 
+        
+
     }
     
+
+    private void JumpAndFallAnim()
+    {
+        if(rb2d.velocity.y > 0)
+        {
+            animator.SetInteger("State", 2);
+            isAir = true;
+        }
+
+        if(rb2d.velocity.y < 0)
+        {
+            animator.SetInteger("State", 3);
+            isAir = true;
+        }
+
+        
+    }
+
     private void OnCollisionStay2D(Collision2D other) 
     {
         if(other.collider.tag == "Ground")
         {
+            if(rb2d.velocity.y == 0 && isAir)
+            {
+                animator.SetInteger("State", 0);
+                isAir = false;
+            }
+
             if(Input.GetKeyDown(KeyCode.UpArrow))
             {
                 //rb2d.AddForce(new Vector2(0, jump), ForceMode2D.Impulse);
 
+
                 GetComponent<Rigidbody2D>().velocity = Vector2.up * jump;
+
+                
             }
         }
     }
@@ -94,9 +168,12 @@ public class PlayerController : MonoBehaviour
         if(pick.gameObject.CompareTag("Enemy"))
         {
             pick.gameObject.SetActive(false);
-
-            lives--;
             
+            if(!musicPlay)
+            {
+            
+                lives--;
+            }
         }
 
         SetText();
@@ -107,15 +184,16 @@ public class PlayerController : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         livesText.text = "Lives: " + lives.ToString();
 
-        if(score >= 8)
+        if(score >= 8 && !musicPlay)
         {
             audioPlayer.Stop();
             
             winText.text = "You Win!";
 
             audioPlayer.clip = winMusic;
-            Debug.Log("Should be printing");
             audioPlayer.Play();
+
+            musicPlay = true;
         }
 
         if(lives == 0 && score < 8)
