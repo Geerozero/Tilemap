@@ -6317,11 +6317,11 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 0.59455395, y: -2.2151375}
-  - {x: -1.1429157, y: -2.179223}
+  - {x: 1.0762587, y: -2.2151375}
+  - {x: -1.5443363, y: -2.205984}
   - {x: -1.5143633, y: 2.178338}
-  - {x: 1.0203176, y: 2.25981}
-  - {x: 0.5945554, y: -2.2598095}
+  - {x: 1.0203176, y: 2.1795259}
+  - {x: 0.995976, y: -2.2865705}
 --- !u!212 &1159746310
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6441,7 +6441,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.20368099, y: 0.027157784}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -6452,7 +6452,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.2763987, y: 4.3132095}
   m_EdgeRadius: 0
 --- !u!82 &1159746315
 AudioSource:
@@ -8672,6 +8672,11 @@ PrefabInstance:
         type: 3}
       propertyPath: speed
       value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746395577153085184, guid: ee698b1e0e9052e46b59e835c7feb19c,
+        type: 3}
+      propertyPath: flipped
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee698b1e0e9052e46b59e835c7feb19c, type: 3}

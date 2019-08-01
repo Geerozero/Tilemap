@@ -9,6 +9,7 @@ public class MoveEnemy : MonoBehaviour
     public float speed;
     private float journeyLength;
     private float startTime;
+    public bool flipped = false;
     
     void Start()
     {
@@ -26,7 +27,30 @@ public class MoveEnemy : MonoBehaviour
         float fracJourney = distCovered / journeyLength;
 
         transform.position = Vector3.Lerp(startPos.position, endPos.position, Mathf.PingPong (fracJourney, 1));
+
     }
+
+   /* private void FixedUpdate() 
+    {
+         if(rigidbody.velocity.x > 0 && flipped)
+        {
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+            flipped = false;
+            Debug.Log("HEWWO");
+        }
+
+        else if(rigidbody.velocity.x < 0 && !flipped)
+        {
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+            flipped = true;
+            Debug.Log("HIII");
+        }
+    }
+    */
 }
 
         /*if(Vector2.Distance(transform.position, startPos.position) < 0.001f)
