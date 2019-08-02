@@ -7,6 +7,9 @@ TagManager:
   - Ground
   - Pickup
   - Enemy
+  - Jump
+  - Power
+  - Life
   layers:
   - Default
   - TransparentFX
@@ -58,4 +61,7 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 1236596691
+    locked: 0
+  - name: LIFE
+    uniqueID: 4027010107
     locked: 0

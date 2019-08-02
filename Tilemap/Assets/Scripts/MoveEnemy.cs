@@ -9,7 +9,10 @@ public class MoveEnemy : MonoBehaviour
     public float speed;
     private float journeyLength;
     private float startTime;
+    private Rigidbody2D rb2d;
     public bool flipped = false;
+    private float vx;
+    private AudioSource audioSource;
     
     void Start()
     {
@@ -18,6 +21,8 @@ public class MoveEnemy : MonoBehaviour
         transform.position = startPos.position;
 
         journeyLength = Vector3.Distance(startPos.position, endPos.position);
+        rb2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -30,27 +35,27 @@ public class MoveEnemy : MonoBehaviour
 
     }
 
-   /* private void FixedUpdate() 
+
+    private void LateUpdate() 
     {
-         if(rigidbody.velocity.x > 0 && flipped)
+        if(Vector3.Distance(transform.position,startPos.position) < 0.1 && flipped)
         {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
             flipped = false;
-            Debug.Log("HEWWO");
         }
 
-        else if(rigidbody.velocity.x < 0 && !flipped)
+        else if(Vector3.Distance(transform.position,endPos.position) < 0.1 && !flipped)
         {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
             flipped = true;
-            Debug.Log("HIII");
+
         }
     }
-    */
+
 }
 
         /*if(Vector2.Distance(transform.position, startPos.position) < 0.001f)
